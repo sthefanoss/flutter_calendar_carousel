@@ -16,7 +16,7 @@ import 'classes/multiple_marked_dates.dart';
 export 'package:flutter_calendar_carousel/classes/event_list.dart';
 
 typedef MarkedDateIconBuilder<T> = Widget? Function(T event);
-typedef void OnDayLongPressed(DateTime day);
+typedef OnDayLongPressed = void Function(DateTime day);
 
 /// This builder is called for every day in the calendar.
 /// If you want to build only few custom day containers, return null for the days you want to leave with default looks
@@ -73,7 +73,7 @@ class CalendarCarousel<T extends EventInterface> extends StatefulWidget {
   final Color selectedDayBorderColor;
   final bool? daysHaveCircularBorder;
   final bool disableDayPressed;
-  final Function(DateTime, List<T>)? onDayPressed;
+  final void Function(DateTime, List<T>)? onDayPressed;
   final TextStyle? weekdayTextStyle;
   final Color iconColor;
   final TextStyle? headerTextStyle;
@@ -119,7 +119,7 @@ class CalendarCarousel<T extends EventInterface> extends StatefulWidget {
   final Widget? leftButtonIcon;
   final Widget? rightButtonIcon;
   final ScrollPhysics? customGridViewPhysics;
-  final Function(DateTime)? onCalendarChanged;
+  final void Function(DateTime)? onCalendarChanged;
   final String locale;
   final int? firstDayOfWeek;
   final DateTime? minSelectedDate;
@@ -127,9 +127,9 @@ class CalendarCarousel<T extends EventInterface> extends StatefulWidget {
   final TextStyle? inactiveDaysTextStyle;
   final TextStyle? inactiveWeekendTextStyle;
   final bool headerTitleTouchable;
-  final Function? onHeaderTitlePressed;
-  final Function? onLeftArrowPressed;
-  final Function? onRightArrowPressed;
+  final VoidCallback? onHeaderTitlePressed;
+  final VoidCallback? onLeftArrowPressed;
+  final VoidCallback? onRightArrowPressed;
   final WeekdayFormat weekDayFormat;
   final bool staticSixWeekFormat;
   final bool isScrollable;
@@ -263,7 +263,7 @@ class _CalendarState<T extends EventInterface>
   /// If the setState called from this class, don't reload the selectedDate, but it should reload selected date if called from external class
 
   @override
-  initState() {
+  void initState() {
     super.initState();
     initializeDateFormatting();
 
@@ -304,12 +304,12 @@ class _CalendarState<T extends EventInterface>
   }
 
   @override
-  dispose() {
+  void dispose() {
     _controller.dispose();
     super.dispose();
   }
 
-  _init() {
+  void _init() {
     final targetDateTime = widget.targetDateTime;
     if (targetDateTime != null) {
       if (targetDateTime.difference(minDate).inDays < 0) {
